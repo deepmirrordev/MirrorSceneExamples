@@ -136,8 +136,20 @@ public class RoomManager : ColyseusManager<RoomManager>
 
     public void StartScan()
     {
+        LeaveRoom();
+        ClearEntities();
+
         DefaultUI.Instance.Restart();
         gameUI.SetActive(false);
+    }
+
+    public void ShowQrCode()
+    {
+        Status status = MirrorScene.Get().ShowMarker();
+        if (!status.IsOk) 
+        {
+            Debug.Log($"Cannot show QR code.");
+        }
     }
 
     public void OnMirrorSceneReady(StatusOr<SceneInfo> sceneInfo)
@@ -326,15 +338,27 @@ public class RoomManager : ColyseusManager<RoomManager>
         }
     }
 
-    public void RebootSelf()
+    private void ClearEntities()
     {
-        LeaveRoom();
         if (_selfEntity.entityRoot != null)
         {
             Destroy(_selfEntity.entityRoot);
         }
         _selfEntity.entityState = null;
         _isSelfEntityInit = false;
+
+        foreach (var entity in _remoteEntities)
+        {
+            Destroy(entity.Value.entityRoot);
+        }
+        _remoteEntities.Clear();
+        _remoteEntitiesWaitForInit.Clear();
+    }
+
+    public void RebootSelf()
+    {
+        LeaveRoom();
+        ClearEntities();
 
         chooseAvatarUI.SetActive(true);
         joystick.gameObject.SetActive(false);
