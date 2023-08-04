@@ -8,16 +8,16 @@
         "com.unity.render-pipelines.universal": ">=12.1.6",
         "com.unity.xr.arfoundation": "^4.2.6"
       },
-      "hash": "aab96cce59a197b9a381412caf0758a60d50cd99"
+      "hash": "243fad05d2023dbee197701b69e0830786164cd4"
     },
     "com.deepmirror.mirrorverse.ui": {
       "version": "https://github.com/deepmirrordev/MirrorVerseUnitySDK.git?path=/Project/Assets/MirrorVerse.UI",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.deepmirror.mirrorverse": "https://github.com/deepmirrorinc/MirrorUnitySDK.git?path=/Project/Assets/MirrorVerse"
+        "com.deepmirror.mirrorverse": "https://github.com/deepmirrordev/MirrorVerseUnitySDK.git?path=/Project/Assets/MirrorVerse"
       },
-      "hash": "aab96cce59a197b9a381412caf0758a60d50cd99"
+      "hash": "243fad05d2023dbee197701b69e0830786164cd4"
     },
     "com.unity.burst": {
       "version": "1.8.4",
