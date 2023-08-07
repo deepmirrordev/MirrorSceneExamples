@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.bshsf.joystick": "https://github.com/Bian-Sh/UniJoystick.git?path=Packages/Joystick",
     "com.deepmirror.mirrorverse": "https://github.com/deepmirrordev/MirrorVerseUnitySDK.git?path=/Project/Assets/MirrorVerse",
     "com.deepmirror.mirrorverse.ui": "https://github.com/deepmirrordev/MirrorVerseUnitySDK.git?path=/Project/Assets/MirrorVerse.UI",
     "com.unity.cinemachine": "2.8.9",
@@ -14,7 +13,6 @@
     "com.unity.xr.arcore": "4.2.8",
     "com.unity.xr.arfoundation": "4.2.8",
     "com.unity.xr.arkit": "4.2.8",
-    "io.colyseus.sdk": "https://github.com/colyseus/colyseus-unity3d.git#upm",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
