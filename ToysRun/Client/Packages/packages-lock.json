@@ -1,12 +1,5 @@
 {
   "dependencies": {
-    "com.bshsf.joystick": {
-      "version": "https://github.com/Bian-Sh/UniJoystick.git?path=Packages/Joystick",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "227c038d44fe66ea8f8246c3cdb38c37ccbdec20"
-    },
     "com.deepmirror.mirrorverse": {
       "version": "https://github.com/deepmirrordev/MirrorVerseUnitySDK.git?path=/Project/Assets/MirrorVerse",
       "depth": 0,
@@ -242,13 +235,6 @@
         "com.unity.xr.legacyinputhelpers": "2.1.7"
       },
       "url": "https://packages.unity.com"
-    },
-    "io.colyseus.sdk": {
-      "version": "https://github.com/colyseus/colyseus-unity3d.git#upm",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "b53c7f58acb85c279b21458afe017b3ab640694d"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
