@@ -152,6 +152,11 @@ public class RoomManager : ColyseusManager<RoomManager>
         }
     }
 
+    public void ClearServerSpec()
+    {
+        serverSpecInput.text = "";
+    }
+
     public void OnMirrorSceneReady(StatusOr<SceneInfo> sceneInfo)
     {
         // Called by MirrorScene system when a scene has processed.
@@ -179,7 +184,7 @@ public class RoomManager : ColyseusManager<RoomManager>
         gameUI.SetActive(true);
     }
 
-    private void ConfigureServerSpec()
+    private bool ConfigureServerSpec()
     {
         ColyseusSettings settings = CloneSettings();
         string[] parts = new string[2];
@@ -187,9 +192,15 @@ public class RoomManager : ColyseusManager<RoomManager>
         {
             parts = serverSpecInput.text.Split(":");
         }
+        else
+        {
+            // No server input. Consider as offline.
+            return false;
+        }
         settings.colyseusServerAddress = parts[0];
         settings.colyseusServerPort = parts[1];
         OverrideSettings(settings);
+        return true;
     }
 
     public void JoinRoomAsFemale()
@@ -214,15 +225,23 @@ public class RoomManager : ColyseusManager<RoomManager>
         _selfEntity.entityRoot.GetComponent<AvatarManager>().OnSitClicked();
     }
 
+    private void JoinOffline(Pose initPose)
+    {
+        Debug.Log($"No sync sever, join with offline solo mode.");
+
+        // Join without sync. Playing as solo.
+        _selfEntity.entityState = new();
+        _selfEntity.entityState.SetPose(initPose);
+        _selfEntity.entityState.type = _selfAvatarGender;
+        SpawnEntity(ref _selfEntity, true);
+        _selfEntity.entityRoot.GetComponent<AvatarManager>().syncEnabled = false;
+    }
+
     private async void JoinRoom(Pose? initPose = null)
     {
-        ConfigureServerSpec();
-
         chooseAvatarUI.SetActive(false);
         joystick.gameObject.SetActive(true);
         controlsUI.SetActive(true);
-
-        ColyseusRoomAvailable[] rooms = await client.GetAvailableRooms("ar_room");
 
         if (!initPose.HasValue && _api != null)
         {
@@ -248,6 +267,13 @@ public class RoomManager : ColyseusManager<RoomManager>
             pose.rotation = Quaternion.Euler(euler);
         }
 
+        if (!ConfigureServerSpec())
+        {
+            JoinOffline(pose);
+            return;
+        }
+
+        ColyseusRoomAvailable[] rooms = await client.GetAvailableRooms("ar_room");
         Dictionary<string, double> startingPosition = new();
         startingPosition["x"] = pose.position.x;
         startingPosition["y"] = pose.position.y;
@@ -257,10 +283,12 @@ public class RoomManager : ColyseusManager<RoomManager>
         startingRotation["x"] = pose.rotation.x;
         startingRotation["y"] = pose.rotation.y;
         startingRotation["z"] = pose.rotation.z;
-        Dictionary<string, object> options = new();
-        options.Add("position", startingPosition);
-        options.Add("rotation", startingRotation);
-        options.Add("type", _selfAvatarGender);
+        Dictionary<string, object> options = new()
+        {
+            { "position", startingPosition },
+            { "rotation", startingRotation },
+            { "type", _selfAvatarGender }
+        };
 
         if (rooms.Length == 0)
         {

@@ -8,16 +8,16 @@
         "com.unity.render-pipelines.universal": ">=12.1.6",
         "com.unity.xr.arfoundation": "^4.2.6"
       },
-      "hash": "243fad05d2023dbee197701b69e0830786164cd4"
+      "hash": "d9961a490a08e91522d00bde788ff8473525fd29"
     },
     "com.deepmirror.mirrorverse.ui": {
       "version": "https://github.com/deepmirrordev/MirrorVerseUnitySDK.git?path=/Project/Assets/MirrorVerse.UI",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.deepmirror.mirrorverse": "https://github.com/deepmirrordev/MirrorVerseUnitySDK.git?path=/Project/Assets/MirrorVerse"
+        "com.deepmirror.mirrorverse": "0.1.3"
       },
-      "hash": "243fad05d2023dbee197701b69e0830786164cd4"
+      "hash": "d9961a490a08e91522d00bde788ff8473525fd29"
     },
     "com.unity.burst": {
       "version": "1.8.4",
@@ -29,7 +29,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {
-      "version": "2.0.4",
+      "version": "2.0.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -50,7 +50,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.18",
+      "version": "2.0.20",
       "depth": 0,
       "source": "registry",
       "dependencies": {
