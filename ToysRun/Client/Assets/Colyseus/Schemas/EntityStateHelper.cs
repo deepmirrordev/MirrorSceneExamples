@@ -20,4 +20,10 @@ public partial class EntityState : Schema {
     {
         return isLocalized;
     }
+
+    public void SetPose(Pose pose)
+    {
+        xPos = pose.position.x; yPos = pose.position.y; zPos = pose.position.z;
+        xRot = pose.rotation.x; yRot = pose.rotation.y; zRot = pose.rotation.z; wRot = pose.rotation.w;
+    }
 }
