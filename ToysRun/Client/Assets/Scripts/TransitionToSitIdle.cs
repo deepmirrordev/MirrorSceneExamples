@@ -6,6 +6,6 @@ public class TransitionToSitIdle : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         var avatarManager = animator.gameObject.GetComponent<AvatarManager>();
-        avatarManager.OnAnimatorSitIdle();
+        avatarManager.OnAnimatorTransitioned("sit_idle");
     }
 }

@@ -1,6 +1,8 @@
 using Colyseus;
 using MirrorVerse;
 using MirrorVerse.UI.MirrorSceneDefaultUI;
+using MirrorVerse.UI.Renderers;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,25 +17,29 @@ public struct EntityInfo
 // Manages a room where multiple entites can sync.
 public class RoomManager : ColyseusManager<RoomManager>
 {
+    public GameObject detectedCylinderPrefab;
     public GameObject femalePrefab;
     public GameObject malePrefab;
     public GameObject cameraObj;
     public GameObject gameUI;
+    public GameObject buttonsUI;
     public GameObject chooseAvatarUI;
     public GameObject controlsUI;
     public InputField serverSpecInput;
     public Joystick joystick;
-    
+    public NavMeshRenderer navMeshRenderer;
+    public StaticMeshRenderer staticMeshRenderer;
+    public Material chairMaterial;
+    public float realSize = 0.1f;
+
     private IMirrorScene _api = null;
     private bool _isSelfEntityInit = false;
-
     private EntityInfo _selfEntity = new();
-    private readonly Dictionary<string, EntityInfo> _remoteEntities = new();
-    
-   
+    private readonly Dictionary<string, EntityInfo> _remoteEntities = new();   
     private readonly List<EntityState> _remoteEntitiesWaitForInit = new();
     private readonly Dictionary<string, GameObject> _avatarPrefab = new();
     private string _selfAvatarGender;
+    private List<GameObject> _detectedCylinders = new();
 
     public ColyseusRoom<MyRoomState> Room { set; get; }
 
@@ -43,6 +49,8 @@ public class RoomManager : ColyseusManager<RoomManager>
 
         ColyseusSettings settings = CloneSettings();
         serverSpecInput.text = string.Format("{0}:{1}", settings.colyseusServerAddress, settings.colyseusServerPort);
+
+        UpdatePrefabRealSize();
 
         _avatarPrefab["female"] = femalePrefab;
         _avatarPrefab["male"] = malePrefab;
@@ -134,13 +142,44 @@ public class RoomManager : ColyseusManager<RoomManager>
         }
     }
 
+    private void InitDetectedCylinders(SceneInfo sceneInfo)
+    {
+        if (sceneInfo.detectionResult.boxDetections.Length > 0)
+        {
+            // If there is any boxes
+            foreach (BoundingBox box in sceneInfo.detectionResult.boxDetections)
+            {
+                if (box.label != "Chair" && box.label != "Sofa")
+                {
+                    // Only deal with chair and sofa.
+                    continue;
+                }
+
+                Vector3[] v = box.boxVertices;
+                Vector3 center = (v[7] + v[1]) / 2;
+                float height = 0.05f * realSize;
+                float radius = Math.Min(0.5f, Vector3.Distance(v[3], v[1]) + Vector3.Distance(v[2], v[0]) / 2);
+                Vector3 scale = new Vector3(radius, height, radius);
+                if (detectedCylinderPrefab != null)
+                {
+                    var cylinder = Instantiate(detectedCylinderPrefab, gameObject.transform);
+                    cylinder.transform.position = center;
+                    cylinder.transform.localScale = scale;
+                    cylinder.SetActive(true);
+                    _detectedCylinders.Add(cylinder);
+                }
+            }
+        }
+    }
+
     public void StartScan()
     {
         LeaveRoom();
         ClearEntities();
+        
+        gameUI.SetActive(false);
 
         DefaultUI.Instance.Restart();
-        gameUI.SetActive(false);
     }
 
     public void ShowQrCode()
@@ -157,6 +196,12 @@ public class RoomManager : ColyseusManager<RoomManager>
         serverSpecInput.text = "";
     }
 
+    private void UpdatePrefabRealSize()
+    {
+        femalePrefab.GetComponent<AvatarManager>().realSize = realSize;
+        malePrefab.GetComponent<AvatarManager>().realSize = realSize;
+    }
+
     public void OnMirrorSceneReady(StatusOr<SceneInfo> sceneInfo)
     {
         // Called by MirrorScene system when a scene has processed.
@@ -164,6 +209,7 @@ public class RoomManager : ColyseusManager<RoomManager>
         {
             Debug.Log($"Scanned scene is ready to use. {sceneInfo.Value.status}");
 
+            InitDetectedCylinders(sceneInfo.Value);
         }
         else
         {
@@ -225,6 +271,64 @@ public class RoomManager : ColyseusManager<RoomManager>
         _selfEntity.entityRoot.GetComponent<AvatarManager>().OnSitClicked();
     }
 
+    public void AvatarSitWithNav(Transform destination)
+    {
+        Pose pose = new Pose(destination.position, destination.rotation);
+        float chairRadius = destination.transform.localScale.x - realSize * 0.2f;
+        _selfEntity.entityRoot.GetComponent<AvatarManager>().OnNavigateSitClicked(pose, chairRadius);
+    }
+
+    public void AvatarMove()
+    {
+        StatusOr<Pose> cursorPose = _api.GetCurrentCursorPose();
+        if (cursorPose.HasValue)
+        {
+            _selfEntity.entityRoot.GetComponent<AvatarManager>().OnNavigateClicked(cursorPose.Value);
+        }
+    }
+
+    public void AddChair()
+    {
+        StatusOr<Pose> cursorPose = _api.GetCurrentCursorPose();
+        if (cursorPose.HasValue)
+        {
+            var cylinder = Instantiate(detectedCylinderPrefab, gameObject.transform);
+            cylinder.transform.position = cursorPose.Value.position;
+            cylinder.transform.localScale = new Vector3(0.5f, 0.05f, 0.5f) * realSize;
+            cylinder.SetActive(true);
+            _detectedCylinders.Add(cylinder);
+        }
+    }
+
+    public void ToggleShowChairs(Toggle change)
+    {
+        foreach (var cylinder in _detectedCylinders)
+        {
+            if (change.isOn)
+            {
+                cylinder.GetComponent<MeshRenderer>().sharedMaterials = new Material[] { chairMaterial };
+            }
+            else
+            {
+                cylinder.GetComponent<MeshRenderer>().sharedMaterials = new Material[] { };
+            }
+        }
+    }
+
+    public void ToggleRealSize(Toggle change)
+    {
+        // Use real size or 1/10 size.
+        realSize = change.isOn ? 1.0f : 0.1f;
+        UpdatePrefabRealSize();
+    }
+
+    public void ToggleShowNavMesh(Toggle change)
+    {
+        print("ToggleNavMesh:" + change.isOn);
+        navMeshRenderer.options.visible = change.isOn;
+        staticMeshRenderer.options.withOcclusion = !change.isOn;
+    }
+    
     private void JoinOffline(Pose initPose)
     {
         Debug.Log($"No sync sever, join with offline solo mode.");
@@ -242,6 +346,7 @@ public class RoomManager : ColyseusManager<RoomManager>
         chooseAvatarUI.SetActive(false);
         joystick.gameObject.SetActive(true);
         controlsUI.SetActive(true);
+        buttonsUI.SetActive(true);
 
         if (!initPose.HasValue && _api != null)
         {
@@ -304,12 +409,13 @@ public class RoomManager : ColyseusManager<RoomManager>
     private void LeaveRoom()
     {
         Room?.Leave(true);
+
     }
 
     protected override void OnApplicationQuit()
     {
         base.OnApplicationQuit();
-        LeaveRoom();
+        ClearAll();
     }
 
     private void RegisterHandlers()
@@ -366,6 +472,13 @@ public class RoomManager : ColyseusManager<RoomManager>
         }
     }
 
+    private void ClearAll()
+    {
+        LeaveRoom();
+        ClearEntities();
+        ClearDetectedCylinders();
+    }
+
     private void ClearEntities()
     {
         if (_selfEntity.entityRoot != null)
@@ -383,6 +496,15 @@ public class RoomManager : ColyseusManager<RoomManager>
         _remoteEntitiesWaitForInit.Clear();
     }
 
+    private void ClearDetectedCylinders()
+    {
+        foreach (var cylinder in _detectedCylinders)
+        {
+            Destroy(cylinder);
+        }
+        _detectedCylinders.Clear();
+    }
+
     public void RebootSelf()
     {
         LeaveRoom();
@@ -391,5 +513,6 @@ public class RoomManager : ColyseusManager<RoomManager>
         chooseAvatarUI.SetActive(true);
         joystick.gameObject.SetActive(false);
         controlsUI.SetActive(false);
+        buttonsUI.SetActive(false);
     }
 }
