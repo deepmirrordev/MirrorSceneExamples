@@ -7,16 +7,16 @@
       "dependencies": {
         "com.unity.render-pipelines.universal": ">=12.1.6"
       },
-      "hash": "2fe449b17e4106cb7c5f4fd828c3c7b80fe59f10"
+      "hash": "dab9f2613aff26f7bfa11f83b840e5feaec8f217"
     },
     "com.deepmirror.mirrorverse.ui": {
       "version": "https://github.com/deepmirrordev/MirrorVerseUnitySDK.git?path=/Project/Assets/MirrorVerse.UI",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.deepmirror.mirrorverse": "0.1.5"
+        "com.deepmirror.mirrorverse": "0.1.6"
       },
-      "hash": "2fe449b17e4106cb7c5f4fd828c3c7b80fe59f10"
+      "hash": "dab9f2613aff26f7bfa11f83b840e5feaec8f217"
     },
     "com.unity.burst": {
       "version": "1.8.4",
@@ -49,7 +49,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.20",
+      "version": "2.0.22",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -150,11 +150,11 @@
       }
     },
     "com.unity.xr.arcore": {
-      "version": "4.2.8",
+      "version": "4.2.10",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.xr.arsubsystems": "4.2.8",
+        "com.unity.xr.arsubsystems": "4.2.10",
         "com.unity.xr.management": "4.0.1",
         "com.unity.modules.androidjni": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0"
@@ -162,29 +162,29 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.arfoundation": {
-      "version": "4.2.8",
+      "version": "4.2.10",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.xr.arsubsystems": "4.2.8",
+        "com.unity.xr.arsubsystems": "4.2.10",
         "com.unity.xr.management": "4.0.1",
         "com.unity.modules.particlesystem": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.arkit": {
-      "version": "4.2.8",
+      "version": "4.2.10",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.editorcoroutines": "1.0.0",
-        "com.unity.xr.arsubsystems": "4.2.8",
+        "com.unity.xr.arsubsystems": "4.2.10",
         "com.unity.xr.management": "4.0.1"
       },
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.arsubsystems": {
-      "version": "4.2.8",
+      "version": "4.2.10",
       "depth": 1,
       "source": "registry",
       "dependencies": {
