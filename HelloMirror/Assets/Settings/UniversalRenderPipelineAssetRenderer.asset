@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5539265326908880052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f1a92e0373933345979dd7c429c1b0e, type: 3}
+  m_Name: ScanLineRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
 --- !u!114 &-3885288613525924429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,6 +39,33 @@ MonoBehaviour:
   m_Name: GrabFeature
   m_EditorClassIdentifier: 
   m_Active: 1
+--- !u!114 &-1847279339721483591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec04e6b8c46dfec47885c054845bb3c3, type: 3}
+  m_Name: BlurBackgroundRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+--- !u!114 &-1511922201001839477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cba173a5237238a4496bd059bc5e0dd9, type: 3}
+  m_Name: ScanLineRenderFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings: {material: {fileID: 0}, renderPassEvent: 500}
 --- !u!114 &-1323016127855141636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55,7 +95,9 @@ MonoBehaviour:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7, type: 3}
   m_RendererFeatures:
   - {fileID: -3885288613525924429}
-  m_RendererFeatureMap: b3d5ea5497ae14ca
+  - {fileID: -1847279339721483591}
+  - {fileID: 4753079260213033092}
+  m_RendererFeatureMap: b3d5ea5497ae14cab99afb523a255de68438467e6754f641
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -93,3 +135,29 @@ MonoBehaviour:
   m_ClusteredRendering: 0
   m_TileSize: 32
   m_IntermediateTextureMode: 1
+--- !u!114 &4753079260213033092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f1a92e0373933345979dd7c429c1b0e, type: 3}
+  m_Name: ScanLineRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+--- !u!114 &8192757775938781487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec04e6b8c46dfec47885c054845bb3c3, type: 3}
+  m_Name: BlurBackgroundRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1

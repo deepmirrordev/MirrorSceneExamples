@@ -143,34 +143,6 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 499889387190709640, guid: 826e843211eb23d4ca465e992a9e1f75, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 499889387190709640, guid: 826e843211eb23d4ca465e992a9e1f75, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 499889387190709640, guid: 826e843211eb23d4ca465e992a9e1f75, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 499889387190709640, guid: 826e843211eb23d4ca465e992a9e1f75, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 499889387190709640, guid: 826e843211eb23d4ca465e992a9e1f75, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 499889387190709640, guid: 826e843211eb23d4ca465e992a9e1f75, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 499889387190709640, guid: 826e843211eb23d4ca465e992a9e1f75, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 499889387190709640, guid: 826e843211eb23d4ca465e992a9e1f75, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -184,7 +156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 499889387190709642, guid: 826e843211eb23d4ca465e992a9e1f75, type: 3}
       propertyPath: m_Name
-      value: MirrorSceneAll
+      value: MirrorSceneAll_DefaultUI
       objectReference: {fileID: 0}
     - target: {fileID: 499889387190709643, guid: 826e843211eb23d4ca465e992a9e1f75, type: 3}
       propertyPath: appAuthOptions

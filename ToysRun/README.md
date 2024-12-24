@@ -2,7 +2,7 @@
 
 A simple multi-player showcase that your avatar and your friend's avatar meet at the table top.
 
-![Screenshot](https://github.com/deepmirrordev/MirrorSceneExamples/assets/61708920/b290f8c2-e4fa-4d83-84f1-0578654bd75f)
+![Screenshot](https://github.com/user-attachments/assets/b290f8c2-e4fa-4d83-84f1-0578654bd75f)
 
 
 ## Run Sync Server Locally

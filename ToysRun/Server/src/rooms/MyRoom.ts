@@ -33,6 +33,7 @@ export class MyRoom extends Room<MyRoomState> {
     console.log(client.sessionId, "joined as", options.type);
     const position = options.position;
     const rotation = options.rotation;
+    const scale = options.scale;
     const player = new EntityState().assign({
       id: client.id,
       type: options.type,
@@ -52,6 +53,14 @@ export class MyRoom extends Room<MyRoomState> {
         yRot: rotation.y,
         zRot: rotation.z,
         wRot: rotation.w,
+      });
+    }
+
+    if (scale) {
+      player.assign({
+        xScale: scale.x,
+        yScale: scale.y,
+        zScale: scale.z,
       });
     }
 
