@@ -1,6 +1,6 @@
 using Colyseus;
 using MirrorVerse;
-using MirrorVerse.UI.MirrorSceneDefaultUI;
+using MirrorVerse.UI.MirrorSceneClassyUI;
 using MirrorVerse.UI.Renderers;
 using System;
 using System.Collections.Generic;
@@ -57,9 +57,9 @@ public class RoomManager : ColyseusManager<RoomManager>
 
         InitializeClient();
 
-        DefaultUI.Instance.onMenuFinish += OnMenuFinish;
-        DefaultUI.Instance.onMenuCancel += OnMenuCancel;
-        DefaultUI.Instance.HideMenu();
+        ClassyUI.Instance.onMenuFinish += OnMenuFinish;
+        ClassyUI.Instance.onMenuCancel += OnMenuCancel;
+        ClassyUI.Instance.HideMenu();
 
         if (MirrorScene.IsAvailable())
         {
@@ -179,7 +179,7 @@ public class RoomManager : ColyseusManager<RoomManager>
         
         gameUI.SetActive(false);
 
-        DefaultUI.Instance.Restart();
+        ClassyUI.Instance.Restart();
     }
 
     public void ShowQrCode()
