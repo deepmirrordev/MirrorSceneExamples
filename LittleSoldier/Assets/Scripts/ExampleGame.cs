@@ -1,7 +1,8 @@
 using MirrorVerse;
-using MirrorVerse.UI.MirrorSceneDefaultUI;
+using MirrorVerse.UI.MirrorSceneClassyUI;
 using MirrorVerse.UI.Renderers;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,38 +11,59 @@ public class ExampleGame : MonoBehaviour
     public StaticMeshRenderer staticMeshRenderer;
     public NavMeshRenderer navMeshRenderer;
     public Canvas gameUI;
-
+    public Canvas rootUI;
     public GameObject soldierPrefab;
     public GameObject obstaclePrefab;
 
     private List<GameObject> _soldiers = new();
     private List<GameObject> _obstacles = new();
 
-    private void Start()
+	private static object GetCoreImplInternalObject()
+	{
+		IMirrorScene iMirrorScene = MirrorScene.Get();
+		const BindingFlags InstanceBindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+		var coreField = iMirrorScene.GetType().GetField("_core", InstanceBindFlags);
+		var coreValue = coreField.GetValue(iMirrorScene);
+		return coreValue;
+	}
+
+	private static void SetArSessionServiceEndpoint()
+	{
+        // Set endpoint by area type.
+        string endpoint = "US";
+
+		const BindingFlags InstanceBindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+		var coreValue = GetCoreImplInternalObject();
+
+		var setArSessionServiceEndpointMethod = coreValue.GetType().GetMethod("SetArSessionServiceEndpoint", InstanceBindFlags);
+		Debug.Log($"SetArSessionServiceEndpoint {setArSessionServiceEndpointMethod}, is set to: [{endpoint}]");
+		setArSessionServiceEndpointMethod.Invoke(coreValue, new object[] { endpoint });
+
+		var SetAuthServiceEndpointMethod = coreValue.GetType().GetMethod("SetAuthServiceEndpoint", InstanceBindFlags);
+		Debug.Log($"SetAuthServiceEndpoint {SetAuthServiceEndpointMethod}, is set to: [{endpoint}]");
+		SetAuthServiceEndpointMethod.Invoke(coreValue, new object[] { endpoint });
+	}
+
+	private void Start()
     {
+        rootUI.gameObject.SetActive(true);
         gameUI.gameObject.SetActive(false);
-        if (MirrorScene.IsAvailable())
+
+		if (MirrorScene.IsAvailable())
         {
-            Debug.Log($"MirrorScene API is available.");
+
+			SetArSessionServiceEndpoint();
+
+			Debug.Log($"MirrorScene API is available.");
             // Application can listen to some events.
-            DefaultUI.Instance.onMenuFinish += OnMenuFinish;
-            DefaultUI.Instance.onMenuCancel += OnMenuCancel;
+            MirrorScene.Get().onSceneReady += OnMirrorSceneReady;
+            ClassyUI.Instance.onMenuFinish += OnMenuFinish;
+            ClassyUI.Instance.onMenuCancel += OnMenuCancel;
         }
         else
         {
             Debug.Log($"MirrorScene API is not available.");
         }
-
-        StartMirrorSceneScanFlow();
-    }
-
-    private void StartMirrorSceneScanFlow()
-    {
-        Debug.Log($"Example start scene scan flow.");
-        DefaultUI.Instance.Restart();
-
-        // Update UI.
-        gameUI.gameObject.SetActive(false);
     }
 
     public void OnMenuFinish()
@@ -50,14 +72,45 @@ public class ExampleGame : MonoBehaviour
         Debug.Log($"Example scene scan flow finished.");
         // Update UI.
         gameUI.gameObject.SetActive(true);
+        rootUI.gameObject.SetActive(true);
     }
 
     public void OnMenuCancel()
     {
         // Called by custom finish prefab.
         Debug.Log($"Example scene scan flow cancelled.");
-        // Quit the app.
-        Application.Quit();
+
+        // Update UI.
+        gameUI.gameObject.SetActive(false);
+        rootUI.gameObject.SetActive(true);
+    }
+    
+    public void OnMirrorSceneReady(StatusOr<SceneInfo> sceneInfo)
+    {
+        // Called by MirrorScene system when a scene has processed.
+        if (sceneInfo.HasValue)
+        {
+            Debug.Log($"Example scanned scene is ready to use. {sceneInfo.Value.status}");
+        }
+        else
+        {
+            Debug.Log($"Example scanned scene failed to process.");
+        }
+    }
+
+    public void OnScanButtonClicked()
+    {
+        Debug.Log($"Example re-start scene scan flow.");
+        // Update UI.
+        gameUI.gameObject.SetActive(false);
+        rootUI.gameObject.SetActive(false);
+        
+        // Clear all field.
+        OnClearButtonClicked();
+
+        ClassyUI.Instance.ExitScene();
+
+        ClassyUI.Instance.RestartToCreate();
     }
 
     public void OnSpawnSoldierButtonClicked()
@@ -86,7 +139,7 @@ public class ExampleGame : MonoBehaviour
         }
     }
 
-    public void OnResetButtonClicked()
+    public void OnClearButtonClicked()
     {
         foreach (GameObject soldier in _soldiers)
         {

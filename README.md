@@ -1,6 +1,6 @@
 # MirrorSceneExamples
 
-A collection of examples for `MirrorScene` applications.
+A collection of examples for using `MirrorScene API` from MirrorVerse Unity SDK. See [MirrorScene](https://mirrorscene.deepmirror.com/) home page for more detail.
 
 |HelloMirror                |ClassyMirror               |LittleSoldier              |ToysRun                    |
 |:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
@@ -9,4 +9,4 @@ A collection of examples for `MirrorScene` applications.
 
 ## Notes
 - In most of the case, you need to build apk and test in a real device. The process of scene scanning does not work when running on Unity Editor on desktop.
-- Please follow the GetStarted instruction on [MirrorVerse SDK](https://github.com/deepmirrordev/MirrorVerseUnitySDK) repo to get an API key to setup the applications.
+- Please follow the GetStarted instruction on MirrorVerse SDK repo to get an API key to setup the applications.

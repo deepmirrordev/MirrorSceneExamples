@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/BotAr.unity
+    path: Assets/Scenes/LittleSoilder.unity
     guid: bc758dca4840d8b45ab27138c7f3a6db
   m_configObjects:
     AR Foundation RemoteARFoundationRemoteLoaderSettings: {fileID: 11400000, guid: 2ec9d2b32bc49bb499383613089f3a8e, type: 2}
@@ -16,3 +16,4 @@ EditorBuildSettings:
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 8d50f9acb4ccb484e91681b0197f6b9e, type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: cccebc7e990242e4e912f062d3847beb, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: fe1bebc918968e04fa13bf38e50020b8, type: 2}
+  m_UseUCBPForAssetBundles: 0
