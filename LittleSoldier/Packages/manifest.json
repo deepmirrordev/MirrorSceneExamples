@@ -12,7 +12,7 @@
     "com.unity.timeline": "1.8.10",
     "com.unity.ugui": "2.0.0",
     "com.unity.xr.arcore": "6.3.3",
-    "com.unity.xr.arengine": "file:com.unity.xr.arengine-0.0.3.tgz",
+    "com.unity.xr.arengine": "file:com.unity.xr.arengine-0.0.4.tgz",
     "com.unity.xr.arfoundation": "6.3.3",
     "com.unity.xr.arkit": "6.3.3",
     "xyz.candycoded.hapticfeedback": "file:xyz.candycoded.hapticfeedback-1.0.3.tgz",
