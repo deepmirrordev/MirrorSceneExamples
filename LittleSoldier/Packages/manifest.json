@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.deepmirror.mirrorverse": "file:com.deepmirror.mirrorverse-0.3.1.tgz",
-    "com.deepmirror.mirrorverse.ui": "file:com.deepmirror.mirrorverse.ui-0.3.1.tgz",
+    "com.deepmirror.mirrorverse": "file:com.deepmirror.mirrorverse-0.3.2.tgz",
+    "com.deepmirror.mirrorverse.ui": "file:com.deepmirror.mirrorverse.ui-0.3.2.tgz",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "2.0.10",
     "com.unity.collab-proxy": "2.11.3",
